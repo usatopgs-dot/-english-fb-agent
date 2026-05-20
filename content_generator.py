@@ -26,14 +26,14 @@ class ContentGenerator:
                     "role": "system",
                     "content": """You are an expert English teacher creating content for a Facebook page.
                     Follow these rules strictly:
-                    1. Write in engaging, friendly style
-                    2. Use simple English (understandable for learners)
+                    1. Write ONLY in English (no other languages)
+                    2. Use simple, clear English for learners
                     3. Add relevant emojis (2-4 per post)
                     4. Include line breaks for readability
                     5. End with a question to drive engagement
-                    6. Add 3-5 relevant hashtags
+                    6. Add 5-7 relevant hashtags
                     7. Keep total post under 150 words
-                    8. Add one Hinglish/Punjabi tip where helpful"""
+                    8. Add an easy memory tip in simple English"""
                 },
                 {
                     "role": "user",
@@ -69,74 +69,64 @@ class ContentGenerator:
             return self._fallback_post(topic, category)
     
     def _create_prompt(self, topic, category):
-        """Create category-specific prompts"""
+        """Create category-specific prompts - ENGLISH ONLY"""
         
         prompts = {
-            'vocabulary': f"""
-            Create a Facebook post for English learners about the word/vocabulary: "{topic}"
+            'vocabulary': f"""Create a Facebook post about the English word: "{topic}"
+Write ENTIRELY in English. Include:
+- Word with emoji
+- Pronunciation (phonetic spelling, like: ri-ZIL-yent)
+- Simple meaning in easy English
+- 2 example sentences from daily life
+- Memory trick in simple English
+- Question to engage followers
+- 5-7 relevant hashtags
+
+DO NOT use Hindi, Punjabi, or any other language. English ONLY.""",
             
-            Include:
-            - Word with emoji indicator
-            - Simple pronunciation guide (in Hindi/Punjabi style)
-            - Meaning in easy English
-            - 2 example sentences in daily use
-            - One memory trick (in Hinglish)
-            - Engagement question
+            'grammar': f"""Create a Facebook grammar post about: "{topic}"
+Write ENTIRELY in English. Include:
+- Grammar rule explained simply
+- 2 correct examples
+- 1 common mistake with correction
+- Quick tip to remember
+- Practice question for followers
+- 5-7 relevant hashtags
+
+English ONLY.""",
             
-            Hashtags: #WordOfTheDay #EnglishVocabulary
-            """,
+            'idiom': f"""Create a Facebook post about the English idiom: "{topic}"
+Write ENTIRELY in English. Include:
+- The idiom in clear format
+- Simple meaning
+- 2 example sentences in real situations
+- Interesting fact about its origin
+- Challenge followers to create their own sentence
+- 5-7 relevant hashtags
+
+English ONLY.""",
             
-            'grammar': f"""
-            Create a Facebook grammar lesson post about: "{topic}"
+            'quiz': f"""Create a fun English quiz about: "{topic}"
+Write ENTIRELY in English. Include:
+- Clear question
+- 4 options (A, B, C, D)
+- Optional hint
+- Ask followers to comment their answer
+- Mention answer will be revealed later
+- 5-7 relevant hashtags
+
+English ONLY.""",
             
-            Include:
-            - Grammar rule explained simply
-            - 2 correct examples
-            - 1 common mistake (with correction)
-            - Quick tip to remember
-            - Practice question
-            
-            Hashtags: #GrammarTips #LearnEnglish
-            """,
-            
-            'idiom': f"""
-            Create a Facebook post about the English idiom: "{topic}"
-            
-            Include:
-            - The idiom
-            - Its simple meaning
-            - 2 real-life example sentences
-            - Origin or fun fact
-            - Challenge followers to make their own sentence
-            
-            Hashtags: #EnglishIdioms #IdiomOfTheDay
-            """,
-            
-            'quiz': f"""
-            Create a fun English quiz post about: "{topic}"
-            
-            Include:
-            - Interesting question
-            - 4 multiple choice options (A, B, C, D)
-            - Hint (optional)
-            - Ask followers to comment their answer
-            - Mention correct answer will be revealed later
-            
-            Hashtags: #EnglishQuiz #TestYourEnglish
-            """,
-            
-            'general': f"""
-            Create an engaging English learning post about: "{topic}"
-            
-            Make it:
-            - Educational but fun
-            - Easy to understand
-            - Shareable content
-            - Include emojis
-            - End with question
-            
-            Hashtags: #LearnEnglish #EnglishTips
-            """
+            'general': f"""Create an engaging English learning post about: "{topic}"
+Write ENTIRELY in English. Make it:
+- Educational but fun
+- Easy to understand
+- Shareable and interesting
+- Include relevant emojis
+- End with an engaging question
+- 5-7 relevant hashtags
+
+English ONLY."""
         }
         
         return prompts.get(category, prompts['general'])

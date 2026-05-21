@@ -1,0 +1,41 @@
+name: Auto Post to Facebook
+
+on:
+  schedule:
+    # IST 6:00 AM = UTC 12:30 AM
+    - cron: '30 0 * * *'
+    # IST 10:00 AM = UTC 4:30 AM
+    - cron: '30 4 * * *'
+    # IST 2:00 PM = UTC 8:30 AM
+    - cron: '30 8 * * *'
+    # IST 6:00 PM = UTC 12:30 PM
+    - cron: '30 12 * * *'
+  
+  # Manual trigger bhi add kar sakde ho
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests facebook-sdk python-dotenv
+    
+    - name: Run Auto Poster
+      env:
+        GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+        GLM_ENDPOINT: ${{ secrets.GLM_ENDPOINT }}
+        GLM_MODEL: ${{ secrets.GLM_MODEL }}
+        FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+      run: python auto_post_once.py
